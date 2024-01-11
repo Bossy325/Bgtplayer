@@ -304,7 +304,49 @@ async def welcome(client, message: Message):
             return
 
 
+import logging
+from telegram import Update
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
+# Enable logging
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+
+# Define the AFK status and message dictionary
+afk_status = {}
+afk_message = {}
+
+# Define the /afk command handler
+def set_afk(update: Update, context: CallbackContext) -> None:
+    user = update.message.from_user
+    afk_status[user.id] = True
+    afk_message[user.id] = 'I am currently away from keyboard. I will get back to you soon.'
+    update.message.reply_text('You are now AFK.')
+
+# Define the message handler to handle mentions when user is AFK
+def afk_reply(update: Update, context: CallbackContext) -> None:
+    user = update.message.from_user
+    if afk_status.get(user.id, False):
+        update.message.reply_text(f'You have been mentioned by {user.first_name}. {afk_message[user.id]}')
+
+def main() -> None:
+    # Create the Updater and pass in the bot's API token
+    updater = Updater("YOUR_API_TOKEN")
+
+    # Get the dispatcher to register handlers
+    dispatcher = updater.dispatcher
+
+    # Register the /afk command handler
+    dispatcher.add_handler(CommandHandler("afk", set_afk))
+
+    # Register the message handler to handle mentions when user is AFK
+    dispatcher.add_handler(MessageHandler(Filters.text & (~Filters.command), afk_reply))
+
+    # Start the Bot
+    updater.start_polling()
+    updater.idle()
+
+if __name__ == '__main__':
+    main()
 # Powered By @BikashHalder & @AdityaHalder 
 # Join @BikashGadgetsTech For More Updates
 # Join @AdityaCheats For Hacks
