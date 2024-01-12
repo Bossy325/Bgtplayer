@@ -57,7 +57,6 @@ async def inline_query_handler(client, query):
 👀 **𝐕𝐢𝐞𝐰𝐬:** `{views}`
 ⏰ **𝐏𝐮𝐛𝐥𝐢𝐬𝐡𝐞𝐝 𝐎𝐧:** {published}
 🎥 **𝐂𝐡𝐚𝐧𝐧𝐞𝐥:** {channel}
-📎 **𝐂𝐡𝐚𝐧𝐧𝐞𝐥 𝐋𝐢𝐧𝐤:** [ᴠɪsɪᴛ ᴄʜᴀɴɴᴇʟ]({channellink})
 
 💖 **𝐒𝐞𝐚𝐫𝐜𝐡 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲 {MUSIC_BOT_NAME}**"""
             answers.append(
